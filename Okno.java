@@ -2,7 +2,7 @@
 package graedukacyjna;
 
 
-
+import java.util.*;
 import java.awt.*;
 import static java.awt.Font.BOLD;
 import static java.awt.Font.DIALOG;
@@ -40,10 +40,16 @@ public class Okno extends JFrame {
    
         //JLabel samochod = new JLabel(Zasoby.car1);
         
-        int a = 800;
         
+        
+         java.util.Timer timer1 = new java.util.Timer();
+            Animacja timer1zad = new Animacja();
+            timer1.schedule(timer1zad, 0, 2);
+            
         Samochod samochod = new Samochod();
-        wstawObiekt(a, 190, 300, 300, samochod);
+      
+        wstawObiekt(Zasoby.polozenie_samochodu, 190, 300, 300, samochod);
+        
         
   
     
@@ -51,7 +57,7 @@ public class Okno extends JFrame {
         wstawObiekt(865, 41, 118, 64, coin);
      
     
-    JLabel punkty = new JLabel(liczPunkty());  
+    JLabel punkty = new JLabel(liczPunkty(0,0));  
         punkty.setFont(new Font(DIALOG, BOLD, 32));
         wstawObiekt(815, 41, 118, 64, punkty);
        
@@ -91,18 +97,16 @@ public class Okno extends JFrame {
     
     }// koniec metody WstawObiekt() 
     
-   //ta metoda będzie dostawała int; po animacji wykonujemy obliczenie, dodajemy do poprzedniej liczby puntow
-     public String liczPunkty() {
-         
-         String punkty;
-         int liczba_punktow;
-            liczba_punktow = 100;
-       
-          
+   // po animacji wykonujemy obliczenie, dodajemy zdobyte punkty do poprzedniej liczby puntow
+     public String liczPunkty(double czas_gry, double odksztalcenie) {
+         //czas gry w sekundach
+         String punkty="";
         
-        punkty = String.valueOf(liczba_punktow);
+            Zasoby.liczba_punktow += Math.round(Zasoby.level*100 - czas_gry - odksztalcenie*10);
+       
+       punkty = String.valueOf(Zasoby.liczba_punktow);
       return punkty;
-  }
+  }// koniec metody liczPunkty()
     
 }
     

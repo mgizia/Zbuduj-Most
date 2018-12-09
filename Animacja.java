@@ -6,22 +6,18 @@ package graedukacyjna;
  * @author Martyna Giziewicz
  * klasa, w której jeździ samochod
  */
-import java.util.Timer;
+import java.util.*;
 
-public class Animacja {
+
+public  class Animacja extends TimerTask {
     
-    
+    @Override
+    public void run(){
+        
+         Zasoby.zmienPolozenieSamochodu();
+        
+    }//koniec run
    
-    public int  zmieniajPolozenie(int start){
-        Timer czas = new Timer();
-        
-        
-        int wyjscie;
-        wyjscie = start - 10;
-        
-        return wyjscie;
-        
-    }//koniec metody zmieniajPolozenia
-    
+
     
 }

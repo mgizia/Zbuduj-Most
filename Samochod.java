@@ -12,7 +12,7 @@ import javax.swing.*;
 public class Samochod extends JLabel {
     //zmienne klasy samochód
    public int ilosc_samochodow =5;
-   public double waga;
+   public double [] waga = {100,200,300,400,500};
    //obrazek
   
   
@@ -24,26 +24,11 @@ public class Samochod extends JLabel {
         
     }//koniec konstruktora samochod
     
-    //metoda wyswietl Samochod () umieszcza konkretny obiekt samochód w animacji
-    //dostaje int level; każdy level ma inny samochód
+    /*metoda umieszcza konkretny obiekt w animacji
+    dostaje int level z Zasobow; 
+    kazdy level ma inny samochód*/
     public static ImageIcon wyswietlSamochod(int level)
     {
-       
-        /*  ImageIcon samochody[] = new ImageIcon[5];
-        samochody[0] = Zasoby.car1;
-        samochody[1] = Zasoby.car2;
-        samochody[2] = Zasoby.car3;
-        samochody[3] = Zasoby.car4;
-        samochody[4] = Zasoby.car5;
-      
-        int x =700;
-        int y = 190;
-        int h =300;
-        int w = 300;*/
-        //kazdy z case'ów tworzy obiekt Samochod, wczytuje obrazek, przekazuje go do animacji
-        
-        
-       
         switch(level)
         {
             case 1:
@@ -69,22 +54,48 @@ public class Samochod extends JLabel {
         switch(level)
         {
             case 1:
-               return waga;
+               return waga[0];
                
             case 2:
-                return waga;
+                return waga[1];
             
             case 3:
-                return waga;
+                return waga[2];
             
             case 4:
-                return waga;
+                return waga[3];
             
             case 5:
-                return waga;
+                return waga[4];
                    
         }//koniec switch
-      return 0;
+      return 0;   
+    }//koniec podajWage 
+    
+   /* public int podajPolozenie(int xstart){
+        int xwyjscie=0;
+            java.util.Timer timer1 = new java.util.Timer();
+            Animacja timer1zad = new Animacja();
+            timer1.schedule(timer1zad, 0, 20);
+            
+        return xwyjscie;
         
-    }//koniec podajWage
+    }//koniec podajPolozenie */
 }//koniec klasy poziom
+
+       
+        /*  ImageIcon samochody[] = new ImageIcon[5];
+        samochody[0] = Zasoby.car1;
+        samochody[1] = Zasoby.car2;
+        samochody[2] = Zasoby.car3;
+        samochody[3] = Zasoby.car4;
+        samochody[4] = Zasoby.car5;
+      
+        int x =700;
+        int y = 190;
+        int h =300;
+        int w = 300;*/
+        //kazdy z case'ów tworzy obiekt Samochod, wczytuje obrazek, przekazuje go do animacji
+        
+        
+       

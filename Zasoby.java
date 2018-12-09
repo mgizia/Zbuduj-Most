@@ -14,7 +14,9 @@ import javax.swing.*;
  */
 public class Zasoby {
     
-    public static int level = 4 ;
+    public static int level = 2 ;
+    public static int polozenie_samochodu = 750;
+    public static int liczba_punktow;
     
     public static ImageIcon background= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tłobezmostu.png");  
     public static ImageIcon menu= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\menu.png");
@@ -62,7 +64,11 @@ public class Zasoby {
         return new ImageIcon(nazwa_pliku);
     }//koniec pobierzObraz();
     
- 
+public static void zmienPolozenieSamochodu()
+{
+    polozenie_samochodu = polozenie_samochodu - 50;
+   
+}
     
 }//koniec klasy zasoby
 

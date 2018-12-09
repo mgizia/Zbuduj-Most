@@ -47,6 +47,29 @@ public class StworzPanel extends JPanel {
       setPreferredSize(new Dimension(200, 200));
   }
 
+ public double obliczNaprezenie(){
+    double nap=0;
+    //pole przekroju ustawiane przez uzytkownika
+    double pole_przekroju = 1; 
+        //waga pobierana z samochodu
+        nap = obliczSile(10)/pole_przekroju;
+    return nap;
+ }//koniec obliczNaprezenie
+ 
+ public double obliczSile(double waga){
+    double sila=0;
+    double g = 9.8; 
+        sila = waga*g;
+    return sila;
+  }//koniec obliczSile()
+ 
+ public double obliczOdksztalcenie(){
+    // modul Younga ustawiany przez uzytkownika(globalnie)
+    double modul_Younga=10; 
+    double odksztalcenie;
+        odksztalcenie = obliczNaprezenie()/modul_Younga;
+    return odksztalcenie;
+ }//koniec obliczOdksztalcenie
  
 }
 /*
