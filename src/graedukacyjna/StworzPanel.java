@@ -1,13 +1,9 @@
 
 package graedukacyjna;
 
-//import java.awt.Graphics;
-
 import java.awt.*;
 import javax.swing.*;
 
-//import java.awt.Graphics2D;
-//import javax.swing.JPanel;
 
 /**
  *
@@ -20,7 +16,7 @@ public class StworzPanel extends JPanel {
   public StworzPanel(String imgFileName, int weight, int height ) {
     loadImage(imgFileName, weight, height);
   }
-
+ 
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (img != null && loaded)
@@ -47,37 +43,5 @@ public class StworzPanel extends JPanel {
       setPreferredSize(new Dimension(200, 200));
   }
 
-}
-/*
-    private Image imga;
  
-    StworzPanel(ImageIcon img){
- 
-    imga=img.getImage();    
-    repaint();
- 
-    }
- 
-    @Override
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    //Wyrysowujesz zdjecie tak zeby zajelo caly obszar
-    g.drawImage(imga, 0, 0, getWidth(), getHeight(), this);
-  }
-    /*int szer;
-    int wys;
-    
-   public StworzProjekt (int szer, int wys){
-       this.szer = szer;
-       this.wys = wys;
-      // Zasoby.background = Zasoby.pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tłobezmostu.png");
-      // repaint();
-      rysujGre();
-   }//koniec konstruktora StworzProjekt
-   
-   
-
-    
-    }//koniec rysujGre
-    */
-
+}//koniec klasy StworzPanel
