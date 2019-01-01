@@ -1,6 +1,10 @@
 
 package graedukacyjna;
 
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -9,22 +13,28 @@ import javax.swing.*;
  * Klasa samochod odzwierciedla obiekty samochodu- różne na kolejnych etapach gry
  */
 
-public class Samochod extends JLabel {
+public class Samochod extends Canvas {
     //zmienne klasy samochód
    public int ilosc_samochodow =5;
-   public double [] waga = {1300, 2500, 5000, 7100, 12000}; //jednostka kg
+   public double [] waga = { 1300, 2500, 5000, 7100, 12000}; //jednostka kg
+
    //obrazek
   
   
     //konstruktor klasy samochód- zmienne są samochody i ich ciężar
     Samochod()
     {
-        super(wyswietlSamochod(Zasoby.level));
-        this.waga = waga;
+        super();
+        setSize(300,200);
+        repaint();
       
     }//koniec konstruktora samochod
     
-    
+    public void paint(Graphics g){
+        Graphics2D g2=(Graphics2D) g; 
+        g2.drawImage(Zasoby.tlo_animacji.getImage(), 0,0,null);
+        g2.drawImage(wyswietlSamochod(Zasoby.level).getImage(),5,Zasoby.polozenie_y[Zasoby.level], null);
+    }//koniec paint
     /*metoda umieszcza konkretny obiekt w animacji
     dostaje int level z Zasobow; 
     kazdy level ma inny samochód*/
@@ -88,17 +98,22 @@ public class Samochod extends JLabel {
        }//koniec else if
        
         odksztalcenie = obliczNaprezenie()/modul_Younga; // MPa/MPa = zgodne jednostki
+        Zasoby.odksztalcenie = odksztalcenie; 
+        czyPowodzenie(odksztalcenie);
         
-        if(odksztalcenie>1){
-            Zasoby.powodzenie = true;
-        }
-        else{
-            Zasoby.powodzenie = false;
-        }
-    return odksztalcenie;
-    
+     return odksztalcenie;
  }//koniec obliczOdksztalcenie
  
+    public void czyPowodzenie(double odksztalcenie){
+        odksztalcenie= odksztalcenie*100000000;
+        if(odksztalcenie<1){
+            Zasoby.powodzenie = true;   
+        }
+        else{
+            Zasoby.powodzenie = false;   
+        }
+   
+    }
     
     public double obliczNaprezenie(){
         
