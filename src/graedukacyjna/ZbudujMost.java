@@ -26,6 +26,8 @@ public class ZbudujMost {
         int yCenter=(screenHeight-wysokoscGry)/2; 
         new Okno(Zasoby.tlomost, szerokoscGry, wysokoscGry, xCenter, yCenter);
         
+       
+        
         
     }//koniec main()
     

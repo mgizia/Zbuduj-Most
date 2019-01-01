@@ -4,12 +4,13 @@ package graedukacyjna;
 
 
 
-import java.awt.*;
+import java.awt.Cursor;
+import java.awt.Font;
 import static java.awt.Font.BOLD;
 import static java.awt.Font.DIALOG;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.awt.*;
 
 /**
  *
@@ -39,32 +40,115 @@ public class Okno extends JFrame {
     
     //dodawanie kolejnych labeli do panelu gry
          
-        Samochod samochod = new Samochod();    
-        dodajAnimacje(samochod,Zasoby.start_animacji);
+        Samochod samochod = new Samochod();  
         
+        JLabel animowane =  new JLabel();
+        animowane.setVisible(false);
+        
+        dodajAnimacje(samochod,Zasoby.start_animacji,animowane);
+     
+        //przyciski menu wyswietlanego po probie przejscia kolejnego poziomu
+            JLabel wyjdz = new JLabel(Zasoby.wyjdz);
+            wstawObiekt(100,500, 156,42, wyjdz);
+                wyjdz.setVisible(false);
+        JLabel nastepny = new JLabel(Zasoby.nastepny);
+            wstawObiekt(400,500, 270,42,nastepny);
+                nastepny.setVisible(false);
+        JLabel sprobuj = new JLabel(Zasoby.sprobuj);
+            wstawObiekt(400,500, 270,42, sprobuj);
+                sprobuj.setVisible(false);
+      
+      //poczatkowa liczba punktow to 100
+//       Punkty punkty = new Punkty(0);  
+       // wstawObiekt(815, 41, 118, 64, punkty);  
+        
+        //sprawdzenie powodzenia
     JLabel sprawdz = new JLabel(Zasoby.sprawdzenie);
-        wstawObiekt(409, 142, 226, 42, sprawdz);    
+        wstawObiekt(409, 142, 226, 42, sprawdz); 
+           kursorLapki(sprawdz);
+           
+      //  Punkty punkciki = new Punkty(0);  
+      //  punkciki.setVisible(false);
+       
+      JLabel punkty = new JLabel();
+      punkty.setVisible(false);
+       // Punkty wynik = new Punkty();
+      //  wstawObiekt(815, 41, 118, 64, punkty);
+        
+        
         sprawdz.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-            double odksztalcenie = samochod.obliczOdksztalcenie();
-                System.out.println("Odksztalcenie wynosci: " + odksztalcenie );  
-                 Zasoby.start_animacji= true;
-        dodajAnimacje(samochod, Zasoby.start_animacji);
-          add(gra);
-   
-    }   
+                //wyswietla wynik
+           double odksztalcenie = samochod.obliczOdksztalcenie();
+            
+             wstawObiekt(815, 41, 118, 64, punkty);
+               System.out.println("Odksztalcenie wynosci: " + odksztalcenie );  
+               Zasoby.start_animacji = true;
+             // punkty.setVisible(false);
+              //if(Zasoby.powodzenie == true){
+           
+            //  Punkty punkciki = new Punkty(odksztalcenie);  
+            //  wstawObiekt(815, 41, 118, 64, wynik);
+            //  punkciki.setVisible(true);
+             // }
+               dodajPunkty(punkty);
+               dodajAnimacje(samochod, Zasoby.start_animacji, animowane);
+               dodajMenu(wyjdz,nastepny,sprobuj);
+               sprawdz.setVisible(false);
+               
+             add(gra);   
+            }  
         });
- 
+    
+         
+            wyjdz.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e) {
+                    System.exit(0);
+                }
+            });
+         
+         sprobuj.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent en) {
+                  
+                    Zasoby.start_animacji = false; 
+                    dodajAnimacje(samochod,Zasoby.start_animacji,animowane);
+                    sprawdz.setVisible(true);
+                   add(gra); 
+                    
+                }
+            });
+          
+         nastepny.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e) {
+                    
+                
+                
+                    
+                    if(Zasoby.level<5){
+                        Zasoby.level = Zasoby.level + 1;
+                      //  Animacja.poziom += 1;
+                    }
+                    else
+                        System.out.println("Koniec gry");
+                   
+                   // Samochod samochod = new Samochod(); //zmienia sie samochod na kolejnym poziomie
+                    Zasoby.start_animacji = false; 
+                    dodajAnimacje(samochod,Zasoby.start_animacji,animowane);
+                    sprawdz.setVisible(true);
+                   add(gra);     
+                }
+            });
+         
+       nastepny.addMouseListener(new MouseAdapter(){
+           public void mouseClicked(MouseEvent en) {
+            //   wynik.setVisible(false);  
+           }
+       });
     
     JLabel coin = new JLabel(Zasoby.coin);
-        wstawObiekt(865, 41, 118, 64, coin);
+        wstawObiekt(870, 41, 118, 64, coin);
      
     
-    JLabel punkty = new JLabel(liczPunkty(0,0));  
-        punkty.setFont(new Font(DIALOG, BOLD, 32));
-        wstawObiekt(815, 41, 118, 64, punkty);
-        
-         
         JPanel alum = new JPanel();
         material_alu = new JComboBox();
         material_alu.addItem("1m^2");
@@ -136,20 +220,23 @@ public class Okno extends JFrame {
         JLabel zakoncz = new JLabel(Zasoby.zakoncz); 
         wstawObiekt(40, 574, 316, 78, zakoncz);
         zakoncz.setVisible(false);
-        
+           kursorLapki(zakoncz);
+           
         JLabel kontynuuj = new JLabel(Zasoby.kontynuuj);
         wstawObiekt(705, 574, 276, 78, kontynuuj);
         kontynuuj.setVisible(false);
-        
+           kursorLapki(kontynuuj);
+           
         JLabel reset = new JLabel(Zasoby.reset);
         wstawObiekt(450, 574, 157, 78, reset);
         reset.setVisible(false);
-        
+           kursorLapki(reset);
+           
         widocznosc_menu = true;
         JLabel menu = new JLabel(Zasoby.menu);
         wstawObiekt(785, 574, 201, 87, menu);
         menu.setVisible(widocznosc_menu);
-    
+            kursorLapki(menu);
         //obsluga przyciskow menu:
             //przycisk resetu:
          reset.addMouseListener(new MouseAdapter() {
@@ -160,8 +247,7 @@ public class Okno extends JFrame {
                reset.setVisible(false);
                kontynuuj.setVisible(false);
                zakoncz.setVisible(false);
-               
-               
+                 
          }
         });
         
@@ -196,8 +282,7 @@ public class Okno extends JFrame {
              
     }
         });
-       
-        
+     
 
     
     add(gra);
@@ -221,33 +306,81 @@ public class Okno extends JFrame {
     }// koniec metody WstawObiekt() 
     
   
-   // po animacji wykonujemy obliczenie, dodajemy zdobyte punkty do poprzedniej liczby puntow
-     public String liczPunkty(double czas_gry, double odksztalcenie) {
-         //czas gry w sekundach
-         String punkty="";
+        void dodajPunkty(JLabel punkty){
+            if(Zasoby.powodzenie == true){
+                
+                wstawObiekt(790, 53, 100, 54, punkty);
+                punkty.setVisible(true);
+                Punkty wynik = new Punkty();
+                punkty.add(wynik);
+            
+            }
+            
+            else{
+            
+            }
         
-            Zasoby.liczba_punktow += Math.round(Zasoby.level*100 - czas_gry - odksztalcenie*10);
-       
-       punkty = String.valueOf(Zasoby.liczba_punktow);
-      return punkty;
-  }// koniec metody liczPunkty()
+        }//koniec dodajPunkty()
+        
     
-     void dodajAnimacje(Samochod samochod, boolean wystartuj){
-         
-          if(wystartuj  == true){ 
-              samochod.setVisible(false);
-       JLabel animowane =  new JLabel();
-       Animacja animacja = new Animacja();
-       animowane.add(animacja);
-       wstawObiekt(0,190,1024,300,animowane); 
-       animowane.setVisible(true);
-  }
-          else{
-           wstawObiekt(Zasoby.polozenie_samochodu, 190, 300, 300, samochod);
-          }
+     void dodajAnimacje(Samochod samochod, boolean wystartuj, JLabel animowane){
+       
+        
+          if(wystartuj  == true){
+              samochod.setVisible(false); 
+              wstawObiekt(0,190,1024,300,animowane); 
+              animowane.setVisible(true);
+               Animacja animacja = new Animacja();           
+          //    animacja.zasadyRysowania(Zasoby.level);
+              animacja.rysyj();
+            //   animacja.zmienPolozenieY();
+                animowane.add(animacja);
+                
+                }
+          else if(wystartuj  == false){
+              //  animowane.setVisible(false);
+              animowane.setVisible(false);
+              
+                wstawObiekt(Zasoby.polozenie_samochodu, 190, 300, 300, samochod);
+                samochod.setVisible(true);
+                
+             
+                }
    
      }// koniec dodajAnimacje()
      
+    void dodajMenu(JLabel wyjdz, JLabel nastepny, JLabel sprobuj){ 
+        kursorLapki(wyjdz);
+        kursorLapki(nastepny);
+        kursorLapki(sprobuj);
+        wyjdz.setVisible(true);
+            if(Zasoby.powodzenie == true){
+                nastepny.setVisible(true); 
+                sprobuj.setVisible(false);
+            }
+            else  {
+                sprobuj.setVisible(true);
+                nastepny.setVisible(false); 
+            } 
+            
+     }
+     
+     
+     void kursorLapki(JLabel przycisk){
+       przycisk.addMouseListener(new MouseAdapter() {
+         public void mouseEntered(MouseEvent e1)
+    {
+  
+        e1.getComponent().setCursor(Cursor.getPredefinedCursor(HAND_CURSOR));
+    }
+    public void mouseExited(MouseEvent e2)
+    {
+        e2.getComponent().setCursor(Cursor.getDefaultCursor());
+    }
+  });
+     } 
+     
+    
      
 }//koniec klasy Okno
     

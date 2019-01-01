@@ -1,7 +1,6 @@
 
 package graedukacyjna;
 
-import java.awt.Image;
 import javax.swing.*;
 
 /**
@@ -24,6 +23,7 @@ public class Samochod extends JLabel {
         this.waga = waga;
       
     }//koniec konstruktora samochod
+    
     
     /*metoda umieszcza konkretny obiekt w animacji
     dostaje int level z Zasobow; 
@@ -88,7 +88,16 @@ public class Samochod extends JLabel {
        }//koniec else if
        
         odksztalcenie = obliczNaprezenie()/modul_Younga; // MPa/MPa = zgodne jednostki
+        Zasoby.odksztalcenie = odksztalcenie; 
+        
+        if(odksztalcenie>1){
+            Zasoby.powodzenie = true;
+        }
+        else{
+            Zasoby.powodzenie = false;
+        }
     return odksztalcenie;
+    
  }//koniec obliczOdksztalcenie
  
     
@@ -112,7 +121,8 @@ public class Samochod extends JLabel {
                 case "3m^2":
                     pole_przekroju = 30000;
                     break;
-             
+                default: 
+                    break;
             }//koniec switch
                 
          
@@ -131,6 +141,8 @@ public class Samochod extends JLabel {
                 case "3m^2":
                     pole_przekroju = 30000;
                     break;
+                default: 
+                    break;
             }//koniec switch
        }//koniec else if
         
@@ -141,8 +153,8 @@ public class Samochod extends JLabel {
  
  public double obliczSile(){
     //waga pobierana z samochodu zależna od poziomu
-     double waga = podajWage(Zasoby.level);
-    double sila=0;
+    double waga = podajWage(Zasoby.level);
+    double sila = 0;
     double g = 9.8; // [m/s]
         sila = waga*g; //wynik w N (kg*(m/s))
         sila = sila/1000; //wynik w kN potrzebny do dalszych obliczen
