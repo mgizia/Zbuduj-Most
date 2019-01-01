@@ -31,12 +31,17 @@ public class Punkty extends Canvas{
     
      public static String liczPunkty(double czas_gry, double odksztalcenie) {
          //czas gry w sekundach
+          odksztalcenie= odksztalcenie*100000000;
          String punkty="";
-        
-            Zasoby.liczba_punktow += Math.round(Zasoby.level*100 - czas_gry - odksztalcenie*10); 
-            aktualna_liczba_punktow.add(new Integer(Zasoby.liczba_punktow));
-            
-       punkty = String.valueOf(Zasoby.liczba_punktow);
+         if(odksztalcenie<1){
+            odksztalcenie = odksztalcenie * 100 * 1/2 * Zasoby.level;
+            Zasoby.liczba_punktow += Math.round(Zasoby.level*100 - czas_gry - odksztalcenie); 
+              //  aktualna_liczba_punktow.add(new Integer(Zasoby.liczba_punktow));
+         }
+         else if(Zasoby.liczba_punktow>0){
+             Zasoby.liczba_punktow = Zasoby.liczba_punktow - 10; // ujemne 10 punktow za nieudana probe
+         }
+      punkty = String.valueOf(Zasoby.liczba_punktow);
       return punkty;
     }// koniec metody liczPunkty()
 }

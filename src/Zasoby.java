@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class Zasoby {
     
-    public static int level = 2;
+    public static int level = 1;
     public static int polozenie_y [] = {0,55,105,82,68,98};
     public static int polozenie_samochodu = 750;
     public static int liczba_punktow;

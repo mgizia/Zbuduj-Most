@@ -41,16 +41,18 @@ public class Okno extends JFrame {
     //dodawanie kolejnych labeli do panelu gry
          
         JLabel samochod = new JLabel();
-         wstawObiekt(Zasoby.polozenie_samochodu, 190, 300, 300, samochod);
-             
-                   Samochod bezanimacji = new Samochod();
-                   samochod.add(bezanimacji);
+        wstawObiekt(Zasoby.polozenie_samochodu, 190, 300, 300, samochod);
+              Samochod bezanimacji = new Samochod();
+                 samochod.add(bezanimacji);
         samochod.setVisible(true);
         
         JLabel animowane =  new JLabel();
         animowane.setVisible(false);
         
-        dodajAnimacje(samochod,Zasoby.start_animacji,animowane);
+        JLabel animowane_zle =  new JLabel();
+        animowane_zle.setVisible(false);
+        
+        dodajAnimacje(samochod,Zasoby.start_animacji,animowane,animowane_zle);
      
         //przyciski menu wyswietlanego po probie przejscia kolejnego poziomu
             JLabel wyjdz = new JLabel(Zasoby.wyjdz);
@@ -90,9 +92,9 @@ public class Okno extends JFrame {
              wstawObiekt(815, 41, 118, 64, punkty);
                System.out.println("Odksztalcenie wynosci: " + odksztalcenie );  
                Zasoby.start_animacji = true;
+               
                dodajPunkty(punkty);
-               Zasoby.powodzenie=bezanimacji.czyPowodzenie(odksztalcenie);
-               dodajAnimacje(samochod, Zasoby.start_animacji, animowane);
+               dodajAnimacje(samochod, Zasoby.start_animacji, animowane,animowane_zle);
                dodajMenu(wyjdz,nastepny,sprobuj);
                sprawdz.setVisible(false);
                
@@ -111,7 +113,7 @@ public class Okno extends JFrame {
                 public void mouseClicked(MouseEvent en) {
                   
                     Zasoby.start_animacji = false; 
-                    dodajAnimacje(samochod,Zasoby.start_animacji,animowane);
+                    dodajAnimacje(samochod,Zasoby.start_animacji,animowane,animowane_zle);
                     sprawdz.setVisible(true);
                    add(gra); 
                     
@@ -126,10 +128,10 @@ public class Okno extends JFrame {
                     }
                     else
                         System.out.println("Koniec gry");
-                   
-                    Zasoby.start_animacji = false; 
-                    dodajAnimacje(samochod,Zasoby.start_animacji,animowane);
-                    sprawdz.setVisible(true);
+                   Zasoby.powodzenie = false;
+                   Zasoby.start_animacji = false; 
+                   dodajAnimacje(samochod,Zasoby.start_animacji,animowane,animowane_zle);
+                   sprawdz.setVisible(true);
                    add(gra);     
                 }
             });
@@ -303,41 +305,48 @@ public class Okno extends JFrame {
   
         void dodajPunkty(JLabel punkty){
             if(Zasoby.powodzenie == true){
-                
                 wstawObiekt(790, 53, 100, 54, punkty);
                 punkty.setVisible(true);
                 Punkty wynik = new Punkty();
-                punkty.add(wynik);
-            
+                punkty.add(wynik);          
             }
-            
             else{
-            
+                
             }
-        
+            
         }//koniec dodajPunkty()
         
     
-     void dodajAnimacje(JLabel samochod, boolean wystartuj, JLabel animowane){
+     void dodajAnimacje(JLabel samochod, boolean wystartuj, JLabel animowane, JLabel animowane_zle){
        
         
           if(wystartuj  == true){
               samochod.setVisible(false); 
-              wstawObiekt(0,190,1024,300,animowane); 
-              animowane.setVisible(true);
-               Animacja animacja = new Animacja();        
+              
+                   
        
-                    if(Zasoby.powodzenie == true){      
-                         animacja.rysyjDobra();      
+                    if(Zasoby.powodzenie == true){
+                        
+                        wstawObiekt(0,190,1024,300,animowane); 
+                         Animacja animacja = new Animacja();    
+                         animacja.rysyjDobra(); 
+                         animowane.add(animacja);
+                         animowane.setVisible(true);
+                         animowane_zle.setVisible(false);
                      }
-                    else{            
-                         animacja.rysyjZla();         
+                    else{    
+                        
+                        wstawObiekt(0,190,1024,300,animowane_zle); 
+                         Niepowodzenie ani = new Niepowodzenie();
+                         ani.rysyjZla();
+                         animowane_zle.add(ani);
+                         animowane.setVisible(false);
+                         animowane_zle.setVisible(true);
                      }
-
-                animowane.add(animacja);   
+                
                 }
           else if(wystartuj  == false){
-              //  animowane.setVisible(false);
+                animowane_zle.setVisible(false);
                 animowane.setVisible(false); 
                 wstawObiekt(Zasoby.polozenie_samochodu, 190, 300, 300, samochod);
                 samochod.setVisible(true);

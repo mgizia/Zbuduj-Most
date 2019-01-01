@@ -1,46 +1,48 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package graedukacyjna;
 
-/**
- *
- * @author Martyna Giziewicz
- * klasa, w której jeździ samochod
- */
 import java.awt.*;
 import java.util.*;
 
 
 
-public  class Animacja extends Canvas {
+public  class Niepowodzenie extends Canvas {
   // public static int poziom=1;
-   ArrayList<Point> points = new ArrayList<Point>();
+   ArrayList<Point> punkty = new ArrayList<Point>();
 
    private int x =  Zasoby.polozenie_samochodu;
-   //int y = Zasoby.polozenie_y[Zasoby.level];
+ //  private int y = polozenie();
    private int ax, ay;
-   //public  int polozenie_y [] = {0,55,105,82,68,98};
-    Animacja(){
+ //  public  int polozenie_y [] = {0,55,105,82,68,98};
+    Niepowodzenie(){
    
         super(); 
        setSize(1024,200);
-  
+    
        
     }//koniec konstruktora Animacja()
-    
-    
-     public void rysyjDobra(){
-        //sprawdzamy powodzenie budowli
-        int y = Zasoby.polozenie_y[Zasoby.level];
-           while(x>80){
-                x=x-10;
-                points.add(new Point(x,y));
-                repaint();
-           }//koeniec while
-      }//koniec RysujDobra()
-        
       
-        
-     /*   public int polozenie(){
+        public void rysyjZla(){
+            int y = Zasoby.polozenie_y[Zasoby.level];
+             while(x>=400){
+                x=x-10;
+                punkty.add(new Point(x,y));
+                repaint();
+             }//koeniec while
+             while(x<400 & y<300){
+             
+               y=y+5;
+                punkty.add(new Point(x,y));
+                repaint();
+             }//koniec while
+         
+        }//koniec  rysujZla()
+
+      /*  public int polozenie(){
             switch(Zasoby.level){
             case 1:
                 y=55;
@@ -62,7 +64,7 @@ public  class Animacja extends Canvas {
                         
         }//koniec switch
         return polozenie_y[Zasoby.level];
-        }//koniec polozenie ()*/
+        }//koniec polozenie ()
       /*  public void zasadyRysowania(int poziom){
         
          switch(poziom){
@@ -89,22 +91,26 @@ public  class Animacja extends Canvas {
         }*/
        public void paint(Graphics g){
        Graphics2D g2=(Graphics2D) g; 
-         
+          
            Point x1;
           Color c=new Color(0f,0f,0f,0f);
               g2.setColor(c);
             
-           for(int i=0; i<points.size();i++){
-               x1=points.get(i);
+           for(int i=0; i<punkty.size();i++){
+               x1=punkty.get(i);
                 ax = (int)x1.getX();
-              //   ay = (int)x1.getY();
-                 ay= Zasoby.polozenie_y[Zasoby.level];
-                g2.clearRect(ax-10, ay, 300, 300); // usuniecie poprzedniego odrysowania
-                
-            //    while()
-      
-              //  g2.drawImage(Zasoby.tlo_ani.getImage(),ax, ay, null);
-                g2.drawImage(Samochod.wyswietlSamochod(Zasoby.level).getImage(),ax,ay, null); // nowe odrysowanie
+                ay = (int)x1.getY();  
+               //  ay = Zasoby.polozenie_y[Zasoby.level];
+                 if(ax>=400){
+                    ay= Zasoby.polozenie_y[Zasoby.level];
+                    g2.clearRect(ax-10, ay, 300, 300); // usuniecie poprzedniego odrysowani
+                    g2.drawImage(Samochod.wyswietlSamochod(Zasoby.level).getImage(),ax,ay, null); // nowe odrysowanie
+                 }
+                 else if(ax<400 & ay <300 & ay > Zasoby.polozenie_y[Zasoby.level]){
+                   
+                     g2.clearRect(ax, ay-5, 300, 300);
+                     g2.drawImage(Samochod.wyswietlSamochod(Zasoby.level).getImage(),ax,ay, null);
+                 }
                 
            try {
             Thread.sleep(90);
@@ -116,4 +122,4 @@ public  class Animacja extends Canvas {
       
 
     
-}//koniec klasy animacja
+}//koniec klasy Niepowodzenie

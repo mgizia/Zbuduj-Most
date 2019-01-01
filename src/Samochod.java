@@ -98,26 +98,18 @@ public class Samochod extends Canvas {
        
         odksztalcenie = obliczNaprezenie()/modul_Younga; // MPa/MPa = zgodne jednostki
         Zasoby.odksztalcenie = odksztalcenie; 
+        czyPowodzenie(odksztalcenie);
         
-        if(odksztalcenie<1){
-            Zasoby.powodzenie= true;
-           
-        }
-        else{
-            Zasoby.powodzenie= false;
-            
-        }
-   
      return odksztalcenie;
  }//koniec obliczOdksztalcenie
  
-    public boolean czyPowodzenie(double odksztalcenie){
-        
+    public void czyPowodzenie(double odksztalcenie){
+        odksztalcenie= odksztalcenie*100000000;
         if(odksztalcenie<1){
-            return true;
+            Zasoby.powodzenie = true;   
         }
         else{
-            return false;
+            Zasoby.powodzenie = false;   
         }
    
     }
