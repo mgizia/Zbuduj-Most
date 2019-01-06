@@ -51,7 +51,12 @@ public class Okno extends JFrame {
         
         JLabel animowane_zle =  new JLabel();
          animowane_zle.setVisible(false);
-        
+          JLabel punkty = new JLabel();
+            punkty.setVisible(false);
+            
+       JLabel punkty_ujemne = new JLabel();
+            punkty_ujemne.setVisible(false);
+            
         dodajAnimacje(samochod,Zasoby.start_animacji,animowane,animowane_zle);
      
         //przyciski menu wyswietlanego po probie przejscia kolejnego poziomu
@@ -74,30 +79,34 @@ public class Okno extends JFrame {
             wstawObiekt(409, 142, 226, 42, sprawdz); 
                kursorLapki(sprawdz);
 
-        JLabel punkty = new JLabel();
-            punkty.setVisible(false);
-            
-       JLabel punkty_ujemne = new JLabel();
-            punkty_ujemne.setVisible(false);
+      JLabel wyniki = new JLabel();
+        
+      wstawObiekt(0, 650,1024,20, wyniki);
+      wyniki.setVisible(false);
       
         //wyswietla wynik
         sprawdz.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 
                double odksztalcenie = bezanimacji.obliczOdksztalcenie();
-               
-                wstawObiekt(815, 41, 118, 64, punkty);
+                
+                //wstawObiekt(815, 41, 118, 64, punkty);
                     Zasoby.start_animacji = true;
-                       
-                         dodajPunkty(punkty,punkty_ujemne);
+                    
+                        dodajOdksztalcenie(wyniki);    
                         dodajAnimacje(samochod, Zasoby.start_animacji, animowane,animowane_zle);
                         dodajMenu(wyjdz,nastepny,sprobuj);
+                       
                         
                         if(Zasoby.powodzenie == false){
                           gra.img = Zasoby.background.getImage();
+                            punkty.setVisible(false);
+                               dodajPunktyUjemne(punkty_ujemne);
                        }
                         else{
                             gra.img = Zasoby.tlo_zmostem.getImage();
+                                punkty_ujemne.setVisible(false);
+                                    dodajPunktyDodatnie(punkty);
                         }
                     sprawdz.setVisible(false);
                     
@@ -195,6 +204,8 @@ public class Okno extends JFrame {
                     alum.setVisible(false);
                    drzewo.setVisible(false);
                      grupa.clearSelection();
+                     wyniki.setVisible(false);
+                  
                 }
             });
      
@@ -238,6 +249,9 @@ public class Okno extends JFrame {
                    alum.setVisible(false);
                    drzewo.setVisible(false);
                    grupa.clearSelection();
+                   wyniki.setVisible(false);
+                   
+                   
                    if(Zasoby.level<=5){
                          sprawdz.setVisible(true);
                          
@@ -346,27 +360,29 @@ public class Okno extends JFrame {
     
     }// koniec metody WstawObiekt() 
     
+        void dodajOdksztalcenie(JLabel wyniki){
+            
+        Odksztalcenie jakie_odkszt = new Odksztalcenie();
+               wyniki.add(jakie_odkszt);
+               wyniki.setVisible(true);
+        }
   
-        void dodajPunkty(JLabel punkty,JLabel punkty_ujemne){
-            if(Zasoby.powodzenie == true){
-                punkty_ujemne.setVisible(false);
+        void dodajPunktyDodatnie(JLabel punkty){
+           
+               // punkty_ujemne.setVisible(false);
                 wstawObiekt(790, 53, 100, 54, punkty);
                 Punkty wynik = new Punkty();
                 punkty.add(wynik); 
                 punkty.setVisible(true);
-               
-            }
-            else{
-                punkty.setVisible(false);
-                wstawObiekt(790, 53, 100, 54, punkty_ujemne);
+                  
+        }//koniec dodajPunkty()
+        
+        void dodajPunktyUjemne(JLabel punkty_ujemne){
+            wstawObiekt(790, 53, 100, 54, punkty_ujemne);
                 UjemnePunkty wynik2 = new UjemnePunkty();
                 punkty_ujemne.add(wynik2);
                 punkty_ujemne.setVisible(true);
-                
-            }
-                   
-        }//koniec dodajPunkty()
-        
+        }
     
      void dodajAnimacje(JLabel samochod, boolean wystartuj, JLabel animowane, JLabel animowane_zle){
        

@@ -31,13 +31,18 @@ public class Punkty extends Canvas{
     
     public static String liczPunkty(double odksztalcenie) {
          //czas gry w sekundach
-          odksztalcenie= odksztalcenie*100000000;
+         
          String punkty="";
-        
+        if(Zasoby.powodzenie == true){
+            //odksztalcenie przemnozone przez wagę zależną od poziomu;
+            odksztalcenie= odksztalcenie*100000000; 
             odksztalcenie = odksztalcenie * 100 * 1/2 * Zasoby.level;
             odksztalcenie = Math.abs(odksztalcenie);
-            Zasoby.liczba_punktow += Math.round(Zasoby.level*100 - odksztalcenie); 
-              //  aktualna_liczba_punktow.add(new Integer(Zasoby.liczba_punktow));
+            /*dodajemy ważone odkształcenie, im wieksze odksytalcenie tym wiecej punktow,
+            * ponieważ zużyto mniej materiału;
+            * dążymy do uzyskania mostu przejezdnego, ale możliwie jak najtańszego */
+            Zasoby.liczba_punktow += Math.round(Zasoby.level*100 + odksztalcenie); 
+        }
         
       punkty = String.valueOf(Zasoby.liczba_punktow);
       return punkty;
