@@ -1,80 +1,71 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package graedukacyjna;
 
-//import java.awt.*;
+import java.awt.Image;
 import javax.swing.*;
 
 /**
  *
  * @author Martyna Giziewicz
+ * Klasa Zasoby przechowuje zmienne statyczne gry: poczatkowe, ulegajace zmianom i nieulegajace zmianom 
  */
 public class Zasoby {
     
-    public static int level = 2;
-    public static int polozenie_samochodu = 750;
+    public static int level = 1; //gre zaczynam od poziomu pierwszego
+    //polozenia kolenych samochodow na osi y, potrzebne do wyrysowywania kolejnych obiektow:
+    public static int polozenie_y [] = {0,55,105,82,68,98,0};
+    public static int polozenie_samochodu = 750; // os x
     public static int liczba_punktow;
-    public static int mYdrewna = 11; //[GPa] moduł Younga drewna dębowego wzdłuż włókien
-    public static int mYalu = 69; //[GPa] moduł Younga stopu glinu (aluminium)
+    public static double odksztalcenie; 
+    public static int mYdrewna = 11000; //[MPa] moduł Younga drewna dębowego wzdłuż włókien
+    public static long mYalu = 69000; //[MPa] moduł Younga stopu glinu (aluminium)
+    //zmienne boolowskie na początku ustawione jako false:
+     public static boolean start_animacji = false;
+     public static boolean koniec_animacji = false;
+     public static boolean powodzenie = false;
+    //ikony kojnych elementow gry:
+     public static ImageIcon menu= pobierzIcon("res\\menu.png");
+     public static ImageIcon sprawdzenie= pobierzIcon("res\\sprawdz.png");
+     public static ImageIcon reset= pobierzIcon("res\\reset.png");
+     public static ImageIcon kontynuuj= pobierzIcon("res\\kontynuuj.png");
+     public static ImageIcon zakoncz= pobierzIcon("res\\zakoncz.png");
+     public static ImageIcon aluminium = pobierzIcon("res\\aluminium.png");;
+     public static ImageIcon wood = pobierzIcon("res\\wood.png");
+     public static ImageIcon nastepny = pobierzIcon("res\\nastepny.png");
+     public static ImageIcon wyjdz = pobierzIcon("res\\wyjdz.png");
+     public static ImageIcon sprobuj = pobierzIcon("res\\sprobuj.png");  
+     public static ImageIcon coin = pobierzIcon("res\\cash.png");
+    //obrazy okreslajace poziom dla kolejnych poziomow
+    public static Image poziom1 = pobierzImg("res\\poziom1.png");
+    public static Image poziom2 = pobierzImg("res\\poziom2.png");
+    public static Image poziom3 = pobierzImg("res\\poziom3.png");
+    public static Image poziom4 = pobierzImg("res\\poziom4.png");
+    public static Image poziom5 = pobierzImg("res\\poziom5.png");
+   //obrazy okreslajace samochod dla kolejnych poziomow
+    public static Image car1 = pobierzImg("res/carred.png");
+    public static Image car2 =  pobierzImg("res/taxi.png");
+    public static Image car3 = pobierzImg("res/truckgreen.png");
+    public static Image car4 = pobierzImg("res/backhoeloader.png"); 
+    public static Image car5 = pobierzImg("res/truckred.png");
+  //rozne tla w zaleznosci od stanu gry:
+    public static String tlo = "res\\tłobezmostu.png";
+    public static String tlomost = "res\\tło_moststalowy.png";
+    public static ImageIcon tlo_zmostem = pobierzIcon(tlomost);
+    public static ImageIcon most_stalowy = pobierzIcon("res\\tło_moststalowy.png");
+    public static ImageIcon tlo_animacji= pobierzIcon("res\\tło_animacji.png");
+    public static ImageIcon background= pobierzIcon("res\\tłobezmostu.png");  
     
-    public static ImageIcon background= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tłobezmostu.png");  
-    public static ImageIcon menu= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\menu.png");
-    public static ImageIcon sprawdzenie= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\sprawdz.png");
-    public static ImageIcon reset= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\reset.png");
-    public static ImageIcon kontynuuj= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\kontynuuj.png");
-    public static ImageIcon zakoncz= pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\zakoncz.png");
-    public static ImageIcon aluminium = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\aluminium.png");;
-    public static ImageIcon wood = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\wood.png");
-    public static ImageIcon poziom1 = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\poziom1.png");
-    public static ImageIcon poziom2 = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\poziom2.png");
-    public static ImageIcon poziom3 = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\poziom3.png");
-    public static ImageIcon poziom4 = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\poziom4.png");
-  //  public static ImageIcon [] cars;
-   
-    public static ImageIcon coin = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\cash.png");
-   
-    public static String nazwa = "E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\carred.png";
-    public static ImageIcon car1 = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/carred.png");
-    public static ImageIcon car2 =  pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/taxi.png");
-    public static ImageIcon car3 = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/truckgreen.png");
-    public static ImageIcon car4 = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/truckred.png");
-    public static ImageIcon car5 = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/backhoeloader.png");
-  
-    public static String tlo = "E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tłobezmostu.png";
-   public static String tlomost = "E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tło_mostdrewniany.png";
-    
-    public static void poczatkowyWyglad()
-    {
-        
-      
-        //nazwa = "E:/PG/semestr5/wjp/projekt/obrazy/png/carred.png";
-        //background = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tłobezmostu.png"); 
-       // menu = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/menu.png");
-        //aluminium = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/aluminium.png");
-        //coin = pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\coin.png");
-       // wood = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/wood.png");
-       // cars[0] = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/carred.png");
-       // cars[1] = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/taxi.png");
-      //  cars[2] = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/truckgreen.png");
-       // cars[3] = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/truckred.png");
-       // cars[4] = pobierzObraz("E:/PG/semestr5/wjp/projekt/obrazy/png/backhoeloader.png");
-        //tlomost = "E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tło_mostdrewniany.png";
-    
-    }//koniec metody poczatkowyWyglad
-
-    public static ImageIcon pobierzObraz(String nazwa_pliku)
+    //metoda zwracajaca ikone
+    public static ImageIcon pobierzIcon(String nazwa_pliku)
     {
         return new ImageIcon(nazwa_pliku);
+    }//koniec pobierzIcon();
+    
+    //metoda zwracajaca obraz
+       public static Image pobierzImg(String nazwa_pliku)
+    {
+        return  pobierzIcon(nazwa_pliku).getImage();
     }//koniec pobierzObraz();
-    
-public static void zmienPolozenieSamochodu()
-{
-    polozenie_samochodu = polozenie_samochodu - 50;
-   
-}
-    
-}//koniec klasy zasoby
+
+}//koniec klasy Zasoby
 

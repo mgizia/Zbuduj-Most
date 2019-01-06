@@ -1,33 +1,41 @@
 
 package graedukacyjna;
 
-import javax.swing.*;
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 
 /**
  *
  * @author Martyna Giziewicz
  * Klasa samochod odzwierciedla obiekty samochodu- różne na kolejnych etapach gry
+ * Obliczamy w niej odsztalcenie na podstawie wyborów gracza
  */
 
-public class Samochod extends JLabel {
+public class Samochod extends Canvas {
     //zmienne klasy samochód
    public int ilosc_samochodow =5;
-   public double [] waga = {750, 1300, 2500, 5000, 7100}; //jednostka kg
-   //obrazek
-  
-  
+   public double [] waga = { 1300, 2500, 5000, 7100, 12000}; //jednostka kg
+
     //konstruktor klasy samochód- zmienne są samochody i ich ciężar
     Samochod()
     {
-        super(wyswietlSamochod(Zasoby.level));
-        this.waga = waga;
+        super();
+        setSize(300,200);
+        repaint();
       
     }//koniec konstruktora samochod
     
+    public void paint(Graphics g){
+        Graphics2D g2=(Graphics2D) g; 
+        g2.drawImage(Zasoby.tlo_animacji.getImage(), 0,0,null);
+        g2.drawImage(wyswietlSamochod(Zasoby.level),5,Zasoby.polozenie_y[Zasoby.level], null);
+    }//koniec paint
     /*metoda umieszcza konkretny obiekt w animacji
     dostaje int level z Zasobow; 
     kazdy level ma inny samochód*/
-    public static ImageIcon wyswietlSamochod(int level)
+    public static Image wyswietlSamochod(int level)
     {
         switch(level)
         {
@@ -49,6 +57,8 @@ public class Samochod extends JLabel {
         }//koniec switch
       return null;
     }//koniec metody wyswietl samochod
+    
+  
     
     public double podajWage(int level){
         switch(level)
@@ -84,10 +94,24 @@ public class Samochod extends JLabel {
            modul_Younga = (double)Zasoby.mYalu;
        }//koniec else if
        
-        odksztalcenie = obliczNaprezenie()/modul_Younga;
-    return odksztalcenie;
+        odksztalcenie = obliczNaprezenie()/modul_Younga; // MPa/MPa = zgodne jednostki
+        Zasoby.odksztalcenie = odksztalcenie; 
+        czyPowodzenie(odksztalcenie);
+        
+     return odksztalcenie;
  }//koniec obliczOdksztalcenie
  
+ //okreslenie powodzenia ukonczenia poziomu
+    public void czyPowodzenie(double odksztalcenie){
+        odksztalcenie= odksztalcenie*100000000;
+        if(odksztalcenie<1){
+            Zasoby.powodzenie = true;   
+        }
+        else{
+            Zasoby.powodzenie = false;   
+        }
+   
+    }
     
     public double obliczNaprezenie(){
         
@@ -95,33 +119,27 @@ public class Samochod extends JLabel {
     //pole przekroju ustawiane przez uzytkownika
     double pole_przekroju; // jednostka m^2
     pole_przekroju = 1; //wartosc poczatkowa 1 potrzebna do zrealizowania dzielenia
+    
+    /*ponizsza funkcja sprawdza wybory gracza 
+    i na ich podstawie ustawia parametry potrzebne do wyliczenia odksztalcenia*/
         if("drewno".equals(Okno.typ_materialu)){
             String sprawdz1;
             sprawdz1 = (String)Okno.material_drewniany.getSelectedItem();
             
             switch(sprawdz1){
                 case "1m^2":
-                    pole_przekroju = 1;
+                    pole_przekroju = 10000;//pole przekroju w cm
                     break;
                 case "2m^2":
-                    pole_przekroju = 2;
+                    pole_przekroju = 20000;
                     break;
                 case "3m^2":
-                    pole_przekroju = 3;
+                    pole_przekroju = 30000;
                     break;
-             
+                default: 
+                    break;
             }//koniec switch
-            
-            /*
-            //gdyby nie dzialal switch: 
-            if( "pierwszy" == Okno.material_drewniany.getSelectedItem()){
-            }
-            else if("drugi" == Okno.material_drewniany.getSelectedItem()){
-             }
-            else if("trzeci" == Okno.material_drewniany.getSelectedItem()){
-            }
-             */      
-         
+          
        }//koniec if
        else if("aluminium".equals(Okno.typ_materialu)){
            String sprawdz2;
@@ -129,54 +147,33 @@ public class Samochod extends JLabel {
             
             switch(sprawdz2){
                 case "1m^2":
-                    pole_przekroju = 1;
+                    pole_przekroju = 10000;//pole przekroju w cm
                     break;
                 case "2m^2":
-                    pole_przekroju = 2;
+                    pole_przekroju = 20000;
                     break;
                 case "3m^2":
-                    pole_przekroju = 3;
+                    pole_przekroju = 30000;
+                    break;
+                default: 
                     break;
             }//koniec switch
        }//koniec else if
         
-        nap = obliczSile()/pole_przekroju;
+        nap = obliczSile()/pole_przekroju; //kN/cm^2 = 10MPa,
+        nap = nap/10; // dzielimy przez 10, aby miec jednostke 1MPa
     return nap;
  }//koniec obliczNaprezenie
  
  public double obliczSile(){
     //waga pobierana z samochodu zależna od poziomu
-     double waga = podajWage(Zasoby.level);
-    double sila=0;
-    double g = 9.8; 
-        sila = waga*g;
+    double waga = podajWage(Zasoby.level);
+    double sila = 0;
+    double g = 9.8; // [m/s] , g-przyspieszenie ziemskie
+        sila = waga*g; //wynik w N (kg*(m/s))
+        sila = sila/1000; //wynik w kN potrzebny do dalszych obliczen
     return sila;
   }//koniec obliczSile()
  
-   /* public int podajPolozenie(int xstart){
-        int xwyjscie=0;
-            java.util.Timer timer1 = new java.util.Timer();
-            Animacja timer1zad = new Animacja();
-            timer1.schedule(timer1zad, 0, 20);
-            
-        return xwyjscie;
-        
-    }//koniec podajPolozenie */
-}//koniec klasy poziom
-
-       
-        /*  ImageIcon samochody[] = new ImageIcon[5];
-        samochody[0] = Zasoby.car1;
-        samochody[1] = Zasoby.car2;
-        samochody[2] = Zasoby.car3;
-        samochody[3] = Zasoby.car4;
-        samochody[4] = Zasoby.car5;
+}//koniec klasy Samochod
       
-        int x =700;
-        int y = 190;
-        int h =300;
-        int w = 300;*/
-        //kazdy z case'ów tworzy obiekt Samochod, wczytuje obrazek, przekazuje go do animacji
-        
-        
-       

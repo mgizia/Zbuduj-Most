@@ -1,17 +1,13 @@
 
 package graedukacyjna;
 
-//import java.awt.Graphics;
-
 import java.awt.*;
 import javax.swing.*;
-
-//import java.awt.Graphics2D;
-//import javax.swing.JPanel;
 
 /**
  *
  * @author Martyna Giziewicz
+ * Klasa StworzPanel to panel podstawowy gry, wczytuje tlo gry i na niej wyrysowywane są kolejne elementy
  */
 public class StworzPanel extends JPanel {
   Image img ;
@@ -32,53 +28,21 @@ public class StworzPanel extends JPanel {
 
   private void loadImage(String imgFileName, int w, int h) {
     img = Toolkit.getDefaultToolkit().getImage(imgFileName);
-    MediaTracker mt = new MediaTracker(this);
-    mt.addImage(img, 1);
-    try {
-      mt.waitForID(1);
-    } catch (InterruptedException exc) {
-    }
-    //int w = img.getWidth(this); // szerokość obrazka
-    //int h = img.getHeight(this); // wysokość obrazka
+     MediaTracker mt = new MediaTracker(this);
+     mt.addImage(img, 1);
+            try {
+         mt.waitForID(1);
+             }
+            catch (InterruptedException exc) {
+             }
+    
     if (w != -1 && w != 0 && h != -1 && h != 0) {
       loaded = true;
       setPreferredSize(new Dimension(w, h));
-    } else
+     }//koniec if 
+    else
       setPreferredSize(new Dimension(200, 200));
-  }
+    }//koniec loadImage()
 
  
-}
-/*
-    private Image imga;
- 
-    StworzPanel(ImageIcon img){
- 
-    imga=img.getImage();    
-    repaint();
- 
-    }
- 
-    @Override
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    //Wyrysowujesz zdjecie tak zeby zajelo caly obszar
-    g.drawImage(imga, 0, 0, getWidth(), getHeight(), this);
-  }
-    /*int szer;
-    int wys;
-    
-   public StworzProjekt (int szer, int wys){
-       this.szer = szer;
-       this.wys = wys;
-      // Zasoby.background = Zasoby.pobierzObraz("E:\\PG\\semestr5\\wjp\\projekt\\obrazy\\png\\tłobezmostu.png");
-      // repaint();
-      rysujGre();
-   }//koniec konstruktora StworzProjekt
-   
-   
-
-    
-    }//koniec rysujGre
-    */
-
+}//koniec klasy StworzPanel

@@ -1,23 +1,65 @@
 
 package graedukacyjna;
 
+import java.awt.*;
+import java.util.*;
+
 /**
  *
  * @author Martyna Giziewicz
- * klasa, w której jeździ samochod
+ * Klasa Animacja rysuje poruszający się obiekt klasy Samochód, jeśli 
+ * powodzenie == true
  */
-import java.util.*;
 
+public  class Animacja extends Canvas {
 
-public  class Animacja extends TimerTask {
+   ArrayList<Point> points = new ArrayList<Point>();
+   private int x =  Zasoby.polozenie_samochodu; // polozenie samochodu na osi x
+   private int ax, ay;
+
+    Animacja(){
+         super(); 
+            setSize(1024,200);
+  
+    }//koniec konstruktora Animacja()
     
-    @Override
-    public void run(){
+    
+     //okreslony sposob poruszania się samochodu, jesli powodzenie == true
+    public void rysyjDobra(){
+        //sprawdzamy powodzenie budowli
+        int y = Zasoby.polozenie_y[Zasoby.level];
+           while(x>80){
+                x=x-10;
+                points.add(new Point(x,y));
+                repaint();
+           }//koniec while
+      }//koniec RysujDobra()
         
-         Zasoby.zmienPolozenieSamochodu();
-        
-    }//koniec run
    
-
-    
-}
+       public void paint(Graphics g){
+           
+       Graphics2D g2=(Graphics2D) g; 
+        
+           Point x1;
+           
+           for(int i=0; i<points.size();i++){
+               x1=points.get(i);
+                ax = (int)x1.getX();
+              
+                 ay= Zasoby.polozenie_y[Zasoby.level];
+                g2.clearRect(ax-10, ay, 300, 300); // usuniecie poprzedniego odrysowania
+                g2.drawImage(Zasoby.tlo_animacji.getImage(), 0,0,null);
+                g2.drawImage(Samochod.wyswietlSamochod(Zasoby.level),ax,ay, null); // nowe odrysowanie
+                
+         try {
+            Thread.sleep(70);
+          } //koniec try
+           catch (InterruptedException ex) 
+           {System.out.println("Wyjatek: "+ex);      
+          }//koniec catch
+         }//koniec for
+       
+       } //koniec paint()
+      
+}//koniec klasy animacja      
+        
